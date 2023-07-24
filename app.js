@@ -27,6 +27,7 @@ app.use(cookieParser());
 // app.use(cors({ origin: 'https://suestado.nomoredomains.work', credentials: true }));
 app.use(express.json());
 app.use(requestLogger);
+app.use(router);
 
 app.use(errorLogger);
 app.use(errors());
