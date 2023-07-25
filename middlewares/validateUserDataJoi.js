@@ -6,7 +6,7 @@ const validateUserDataJoi = celebrate({
     email: Joi.string().required().pattern(emailRegExp),
     password: Joi.string().required().min(4),
     name: Joi.string().min(2).max(30),
-  })
+  }),
 });
 
 module.exports = validateUserDataJoi;

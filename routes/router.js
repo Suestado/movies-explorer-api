@@ -19,21 +19,21 @@ const {
   createMovie,
   deleteMovie,
 } = require('../controllers/movies');
+const badRoute = require('../controllers/404page');
 
-// # создаёт пользователя с переданными в теле
-// # email, password и name
 router.post('/signup', validateUserDataJoi, createUser);
-
-// # проверяет переданные в теле почту и пароль
-// # и возвращает JWT
 router.post('/signin', validateUserDataJoi, logIn);
 
 router.use(auth);
 
 router.get('/users/me', findUserMe);
+router.patch('/users/me', validateUserUpdateJoi, updateUserInfo);
 router.get('/movies', getMovie);
 router.post('/movies', validateMovieDataJoi, createMovie);
-router.patch('/users/me', validateUserUpdateJoi, updateUserInfo);
 router.delete('/movies/:_id', validateMovieGetByIDJoi, deleteMovie);
+
+router.get('/logout', logOut);
+
+router.use('*', badRoute);
 
 module.exports = router;

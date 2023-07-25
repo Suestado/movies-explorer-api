@@ -4,7 +4,6 @@ const NotFound = require('../utils/errors/NotFound');
 const {
   statusOk,
   statusCreated,
-  statusModified,
 } = require('../utils/constants');
 
 const Movie = require('../models/movie');
@@ -53,7 +52,6 @@ const createMovie = (req, res, next) => {
       res.status(statusCreated).send(movie);
     })
     .catch((err) => {
-      console.log(err);
       if (err instanceof ValidationError) {
         next(new BadRequest('Фильм не может быть сохранен. Проверьте введенные данные'));
       } else {

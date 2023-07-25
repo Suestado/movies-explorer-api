@@ -11,20 +11,15 @@ const errorsGlobalHandler = require('./middlewares/errorsGlobalHandler');
 const { PORT = 4000 } = process.env;
 const app = express();
 
-// mongooseConnect('mongodb://127.0.0.1/explorefilmsdb', {
-//   useUnifiedTopology: true,
-// });
-
-mongooseConnect('mongodb://localhost:27017/explorefilmsdb', {
+mongooseConnect('mongodb://127.0.0.1/explorefilmsdb', {
   useUnifiedTopology: true,
 });
-
 
 mongooseConnection.on('error', (err) => console.log(`Ошибка подключения к базе данных: ${err}`));
 mongooseConnection.once('open', () => console.log('Подключение к базе данных установлено'));
 
 app.use(cookieParser());
-// app.use(cors({ origin: 'https://suestado.nomoredomains.work', credentials: true }));
+app.use(cors({ origin: ['https://suestado.nomoredomains.work', 'http://localhost:3000'], credentials: true }));
 app.use(express.json());
 app.use(requestLogger);
 app.use(router);

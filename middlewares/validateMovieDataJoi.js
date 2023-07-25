@@ -1,5 +1,5 @@
 const { celebrate, Joi, Segments } = require('celebrate');
-const { linkRegExp } = require('../utils/constants');
+const { urlRegExp } = require('../utils/constants');
 
 const validateMovieDataJoi = celebrate({
   [Segments.BODY]: Joi.object().keys({
@@ -8,11 +8,11 @@ const validateMovieDataJoi = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().pattern(linkRegExp),
-    trailerLink: Joi.string().required().pattern(linkRegExp),
+    image: Joi.string().required().pattern(urlRegExp),
+    trailerLink: Joi.string().required().pattern(urlRegExp),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    thumbnail: Joi.string().required().pattern(linkRegExp),
+    thumbnail: Joi.string().required().pattern(urlRegExp),
     movieId: Joi.number().required(),
   }),
 });

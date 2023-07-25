@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcryptjs');
-// const StatusDenied = require('../utils/errors/StatusDenied'); //TODO дописать обработку ошибки отказа в доступе
+const StatusDenied = require('../utils/errors/StatusDenied');
 
 const userSchema = new Schema({
   email: {
