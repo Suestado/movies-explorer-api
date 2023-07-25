@@ -4,6 +4,7 @@ const { connect: mongooseConnect, connection: mongooseConnection } = require('mo
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { errors } = require('celebrate');
+const limiter = require('./utils/rateLimiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes/router');
 const errorsGlobalHandler = require('./middlewares/errorsGlobalHandler');
@@ -11,12 +12,14 @@ const errorsGlobalHandler = require('./middlewares/errorsGlobalHandler');
 const { PORT = 4000 } = process.env;
 const app = express();
 
-mongooseConnect('mongodb://127.0.0.1/explorefilmsdb', {
+mongooseConnect('mongodb://127.0.0.1/bitfilmsdb', {
   useUnifiedTopology: true,
 });
 
 mongooseConnection.on('error', (err) => console.log(`Ошибка подключения к базе данных: ${err}`));
 mongooseConnection.once('open', () => console.log('Подключение к базе данных установлено'));
+
+app.use(limiter);
 
 app.use(cookieParser());
 app.use(cors({ origin: ['https://suestado.nomoredomains.work', 'http://localhost:3000'], credentials: true }));

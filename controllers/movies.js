@@ -1,6 +1,7 @@
 const { CastError, ValidationError } = require('mongoose').MongooseError;
 const BadRequest = require('../utils/errors/BadRequest');
 const NotFound = require('../utils/errors/NotFound');
+const ForbiddenRequest = require('../utils/errors/ForbiddenRequest');
 const {
   statusOk,
   statusCreated,
@@ -70,11 +71,14 @@ function processErrors(err, req, res, next) {
 
 const deleteMovie = (req, res, next) => {
   const { _id } = req.params;
+  const userId = req.user._id;
 
   Movie.findById(_id)
-    .then((card) => {
-      if (!card) {
+    .then((movie) => {
+      if (!movie) {
         throw new NotFound('Фильм не был найден');
+      } else if (movie.owner.valueOf() !== userId) {
+        throw new ForbiddenRequest('Нет прав на удаление фильма');
       } else {
         Movie.findByIdAndRemove(_id)
           .then((deletedMovie) => {
