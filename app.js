@@ -9,7 +9,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes/router');
 const errorsGlobalHandler = require('./middlewares/errorsGlobalHandler');
 
-const { PORT = 4000 } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 
 mongooseConnect('mongodb://127.0.0.1/bitfilmsdb', {
@@ -22,7 +22,13 @@ mongooseConnection.once('open', () => console.log('Подключение к б�
 app.use(limiter);
 
 app.use(cookieParser());
-app.use(cors({ origin: ['https://suestado.nomoredomains.work', 'http://localhost:3000'], credentials: true }));
+app.use(cors({
+  origin: [
+    'http://suestado-diploma.nomoredomains.xyz',
+    'https://suestado-diploma.nomoredomains.xyz',
+    'http://localhost:3000'],
+  credentials: true,
+}));
 app.use(express.json());
 app.use(requestLogger);
 app.use(router);
