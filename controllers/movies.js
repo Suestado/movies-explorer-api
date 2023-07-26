@@ -10,9 +10,11 @@ const {
 const Movie = require('../models/movie');
 
 const getMovie = (req, res, next) => {
+  const userId = req.user._id;
+
   Movie.find({})
     .then((movies) => {
-      res.status(statusOk).send(movies);
+      res.status(statusOk).send(movies.filter((movie) => movie.owner.toString() === userId));
     })
     .catch((err) => {
       next(err);
@@ -80,7 +82,7 @@ const deleteMovie = (req, res, next) => {
       } else if (movie.owner.valueOf() !== userId) {
         throw new ForbiddenRequest('Нет прав на удаление фильма');
       } else {
-        Movie.findByIdAndRemove(_id)
+        return Movie.findByIdAndRemove(_id)
           .then((deletedMovie) => {
             res.status(statusOk).send(deletedMovie);
           });

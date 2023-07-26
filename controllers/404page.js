@@ -1,7 +1,7 @@
 const NotFound = require('../utils/errors/NotFound');
 
 function throwError() {
-  throw new NotFound('Не действительный путь до ресурса');
+  throw new NotFound('Страница не найдена');
 }
 
 const badRoute = (req, res, next) => {
