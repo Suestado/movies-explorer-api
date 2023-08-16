@@ -12,6 +12,10 @@ const errorsGlobalHandler = require('./middlewares/errorsGlobalHandler');
 const { PORT = 3000 } = process.env;
 const app = express();
 
+process.on('uncaughtException', function (err) {
+  console.log(err);
+});
+
 mongooseConnect(process.env.NODE_ENV === 'production' ? process.env.MONGO_CONNECTION : 'mongodb://127.0.0.1/bitfilmsdb', {
   useUnifiedTopology: true,
 });
