@@ -94,8 +94,8 @@ const logOut = (req, res) => {
   res
     .status(200)
     .clearCookie('jwt', {
-      'SameSite': 'None',
-      'Secure': true,
+      samesite: 'none',
+      secure: true,
     })
     .send({ message: 'logOut прошел успешно' });
 };
