@@ -91,7 +91,13 @@ const findUserMe = (req, res, next) => {
 };
 
 const logOut = (req, res) => {
-  res.status(200).clearCookie('jwt').send({ message: 'logOut прошел успешно' });
+  res
+    .status(200)
+    .clearCookie('jwt', {
+      'SameSite': 'none',
+      'secure': true,
+    })
+    .send({ message: 'logOut прошел успешно' });
 };
 
 const updateUserInfo = (req, res, next) => {
