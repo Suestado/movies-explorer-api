@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (!token) {
-    throw new StatusDenied('Необходима авторизация');
+    throw new StatusDenied('Необходима авторизация. Токен не найден');
   }
 
   let payload;
